@@ -41,9 +41,10 @@ export default function ModalProvider({ children }: ModalProviderProps) {
 
   const setOpen = async (modal: ReactNode, fetchData?: () => Promise<any>) => {
     if (modal) {
-      if (fetchData) {
-        setData({ ...data, ...(await fetchData()) } || {})
-      }
+     if (fetchData) {
+  const result = await fetchData(); // Safely invoke fetchData
+  setData({ ...data, ...(result || {}) }); // Merge the result with existing data
+}
       setShowingModal(modal)
       setIsOpen(true)
     }
